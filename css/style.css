@@ -54,12 +54,8 @@ body {
 	place-content: flex-end;
 }
 
-.form-footer > div {
+.form-footer > * {
 	margin: 0 0.5rem;
-	color: blue;
-}
-.form-footer > div:hover {
-	cursor: pointer;
 }
 
 .form-group {
