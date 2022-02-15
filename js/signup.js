@@ -9,7 +9,7 @@ signup.addEventListener('click', signUp);
 
 
 function signUp() {
-    if(user_name.vlaue == "", email == "", password == "", password_check == "") {
+    if(user_name.value == "" && email.value == "" && password.value == "" && password_check.value == "") {
         alert("Please fill all fields");
     }else {
         let image = document.getElementById("image")['files'][0];
