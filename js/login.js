@@ -1,12 +1,12 @@
-let login = document.getElementById("login");
+let login_button = document.getElementById("login");
 let email=document.getElementById("email");
 let password=document.getElementById("password");
 let response=document.getElementById("response");
 
 
-login.addEventListener("click", login);
+login_button.addEventListener("click", logIn);
 
-function login(){
+function logIn(){
 
     if(email.value==="" || password.value===""){
         response.innerHTML="<p>Please fill all fields.</p>";
