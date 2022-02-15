@@ -1,5 +1,7 @@
-/* :root {
-} */
+:root {
+	--color-blue: #3c5b9a;
+	--color-lightblue: #166fe5;
+}
 
 * {
 	margin: 0;
@@ -10,7 +12,7 @@
 body {
 	display: flex;
 	justify-content: center;
-	background-color: darkgray;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -18,14 +20,16 @@ body {
 	flex-direction: column;
 	align-items: center;
 	width: 40%;
+	margin-bottom: 8rem;
 }
 
 .container-logo {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	width: 15rem;
+	width: 18rem;
 	height: 10rem;
+	margin-bottom: 1rem;
 }
 
 .container-form {
@@ -36,30 +40,86 @@ body {
 
 	background-color: lightgray;
 	border-radius: 20px;
-	box-shadow: 0px 0px 0px 2rem lightgrey;
+	box-shadow: 0px 0px 0px 2rem lightgrey, 0 0 10px 2.1rem var(--color-blue);
 
 	padding: 5% 5% 0 5%;
 	width: 100%;
 	z-index: 0;
 }
 
+.form-header {
+	margin-top: 1rem;
+}
+
 .form-body {
 	margin: 1rem 0;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 
 .form-footer {
 	display: flex;
-	place-content: flex-end;
-}
-
-.form-footer > * {
-	margin: 0 0.5rem;
+	justify-content: space-between;
 }
 
 .form-group {
 	margin: 0.5rem 0;
+	width: 100%;
+}
+
+.form-group > input {
+	height: 2rem;
+	width: 100%;
+	border: 0px;
+	border-radius: 5px;
+}
+
+input:focus {
+	outline: none !important;
+	border: 1px solid var(--color-blue);
+	box-shadow: 0 0 10px var(--color-lightblue);
+	padding: 0 1rem;
+}
+
+a {
+	margin: 0;
+	width: 100%;
+	text-decoration: none;
+}
+
+a > .form-group {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.form-group > button {
+	height: 3rem;
+	width: 95%;
+	border-radius: 5px;
+}
+
+.signup {
+	background-color: white;
+	border: 2px solid var(--color-blue);
+	color: var(--color-blue);
+	font-weight: 600;
+}
+.signup:hover {
+	cursor: pointer;
+	background-color: var(--color-blue);
+	color: white;
+}
+
+.login {
+	background-color: var(--color-lightblue);
+	border: 0px;
+	color: white;
+	font-weight: 600;
+}
+.login:hover {
+	cursor: pointer;
+	background-color: var(--color-blue);
 }
 
 img {
@@ -67,9 +127,4 @@ img {
 	object-fit: cover;
 	width: 100%;
 	z-index: 1;
-}
-
-button {
-	width: 6rem;
-	height: 2rem;
 }
