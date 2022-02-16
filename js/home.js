@@ -5,6 +5,8 @@ let profile_info=document.getElementById("profile_info");
 let notifications=document.getElementById("notification");
 let content=document.getElementById("content");
 
+let img_path="../../facebook_backend/images/";
+
 search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
 
@@ -67,7 +69,6 @@ function getUserPosts(){
 
 function renderUserInfo(user_data_response){
 
-    let img_path="../../facebook_backend/images/";
     console.log(img_path);
     let y=`${img_path}${user_data_response.data[0].user_picture}`;
     console.log(y);
@@ -84,7 +85,6 @@ function renderUserInfo(user_data_response){
 
 function renderFriendRequests(friend_requests_response){
 
-    let img_path="../../facebook_backend/images/";
 
     friend_requests_response.data.forEach(user => {
         notifications.innerHTML+=` 
@@ -106,8 +106,6 @@ function renderFriendRequests(friend_requests_response){
 
 
 function renderPosts(posts_response){
-
-    let img_path="../../facebook_backend/images/";
 
 
     posts_response.data.forEach(post => {
