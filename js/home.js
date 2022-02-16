@@ -3,6 +3,7 @@ let search=document.getElementById("find_friends");
 let my_posts=document.getElementById("my_posts");
 let profile_info=document.getElementById("profile_info");
 let notifications=document.getElementById("notification");
+let content=document.getElementById("content");
 
 search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
@@ -18,7 +19,7 @@ async function getFeed(){
 await axios.all([user_info_request, notifications_request, posts_request]).then(axios.spread(function(res1, res2, res3) {
   renderUserInfo(res1);
   renderFriendRequests(res2);
-  console.log(res3);
+  renderPosts(res3);
 }));
 }
 getFeed();
@@ -99,6 +100,40 @@ function renderFriendRequests(friend_requests_response){
                 <button class="action-button">-</button>
             </div>
         </div>`
+    });
+
+}
+
+
+function renderPosts(posts_response){
+
+    let img_path="../../facebook_backend/images/";
+
+
+    posts_response.data.forEach(post => {
+
+        var post_date = `${post.post_date}`;
+        var splittedString=post_date.split(":");
+        post_date=splittedString.slice(0,-1).join(':');
+
+        content.innerHTML+=`
+        <div class="post" id="${post.post_id}">
+        <div class="post-header">
+            <div class="post-profile-picture">
+                <img src="${img_path}${post.user_picture}" alt="profile pic">
+            </div>
+            <div class="post-profile-name">
+                <h4>${post.user_name}</h4>
+            </div>
+        </div>
+        <div class="post-content">
+            <textarea id="1" class="textarea" readonly>${post.post_content}</textarea>
+        </div>
+        <div class="post-footer">
+            <div class="likes">${post.nb_likes}</div>
+            <div class="date">${post_date}</div>
+        </div>
+    </div>`
     });
 
 }
