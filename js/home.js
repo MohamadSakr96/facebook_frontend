@@ -89,17 +89,21 @@ function renderFriendRequests(friend_requests_response){
     friend_requests_response.data.forEach(user => {
         notifications.innerHTML+=` 
         <div class="notification-item">
-            <div class="not-profile-picture">
-                <img src="${img_path}${user.user_picture}" alt="profile pic">
+            <div class="action-left">
+                <div class="not-profile-picture">
+                    <img src="${img_path}${user.user_picture}" alt="profile pic">
+                </div>
+                <div class="not-profile-name">
+                    <p>${user.user_name}</p>
+                </div>
             </div>
-            <div class="not-profile-name">
-                <p>${user.user_name}</p>
+            <div class="action-right">
+                <div class="action">
+                    <button class="action-button">+</button>
+                    <button class="action-button">-</button>
+                </div>
             </div>
-            <div class="action">
-                <button class="action-button">+</button>
-                <button class="action-button">-</button>
-            </div>
-        </div>`
+        `;     
     });
 
 }
