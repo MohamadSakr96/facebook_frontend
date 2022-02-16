@@ -39,8 +39,34 @@ body {
 	flex-direction: column;
 	place-content: center;
 }
+.filter-MY-posts {
+	height: 70%;
+	width: 50%;
+	background-color: var(--color-background);
+	margin-top: 10%;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
+	padding: 12rem 2rem 2rem;
+	overflow-y: auto;
+}
+.filter-MY-posts-title {
+	margin-bottom: 4rem;
+}
 .filter-post-title {
 	margin-left: 2rem;
+}
+.MY-posts-header {
+	display: flex;
+	justify-content: space-between;
+	width: 90%;
+	margin-top: 1rem;
+	margin-left: 1rem;
+	font-weight: 500;
+	font-size: 22px;
+}
+.MY-posts-header > .left {
+	display: flex;
 }
 
 .filter-post-footer {
