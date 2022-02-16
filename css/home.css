@@ -20,6 +20,35 @@ body {
 	display: flex;
 }
 
+.filter {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	place-content: center;
+}
+.filter-post {
+	height: 50%;
+	width: 50%;
+	background-color: var(--color-background);
+	margin-top: 10%;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
+}
+.filter-post-title {
+	margin-left: 2rem;
+}
+
+.filter-post-footer {
+	display: flex;
+	place-content: flex-end;
+	margin-right: 2rem;
+}
+
 .container-menu {
 	position: fixed;
 	display: flex;
@@ -108,6 +137,7 @@ body {
 	padding: 1rem 0;
 
 	background-color: var(--color-background);
+	overflow-y: auto;
 }
 
 .notification-item {
@@ -251,4 +281,24 @@ textarea {
 
 .logout {
 	margin-top: 1rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
