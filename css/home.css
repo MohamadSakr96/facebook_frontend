@@ -120,7 +120,7 @@ body {
 .container-logo {
 	display: flex;
 	justify-content: center;
-	width: 10rem;
+	width: 15rem;
 	height: 3.5rem;
 }
 .container-logo > img {
@@ -141,7 +141,7 @@ body {
 	place-content: center;
 	width: 80px;
 	aspect-ratio: 1;
-	border-radius: 50%;
+	border-radius: 25px;
 	overflow: hidden;
 }
 .profile-picture > img {
@@ -235,7 +235,7 @@ body {
 }
 
 .content-header {
-	margin: 2rem;
+	margin: 1rem;
 	display: flex;
 	justify-content: space-between;
 }
@@ -319,6 +319,8 @@ textarea {
 }
 
 .btn {
+	font-size: 0.95rem;
+	font-weight: 600;
 	width: 122px;
 	height: 40px;
 	border-radius: 50px;
@@ -327,7 +329,41 @@ textarea {
 }
 
 .logout {
+	width: 90%;
 	margin-top: 1rem;
+	background: #f44a4a;
+}
+.logout:hover {
+	cursor: pointer;
+	background-color: red;
+}
+
+.find {
+	width: 90%;
+	margin-top: 1rem;
+	background: rgba(255, 255, 255, 0.66);
+}
+.find:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.274);
+}
+
+.create-post {
+	background: #3bd68b;
+	color: #f1f1f1;
+}
+.create-post:hover {
+	cursor: pointer;
+	background-color: #089b54d0;
+}
+
+.check-post {
+	background: var(--color-blue);
+	color: #f1f1f1;
+}
+.check-post:hover {
+	cursor: pointer;
+	background-color: #04369bef;
 }
 
 /* width */
