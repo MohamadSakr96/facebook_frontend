@@ -5,7 +5,7 @@ let profile_info=document.getElementById("profile_info");
 let notifications=document.getElementById("notification");
 let content=document.getElementById("content");
 
-let img_path="../../facebook_backend/images/";
+let img_path="../../images/";
 
 search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
