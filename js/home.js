@@ -24,7 +24,43 @@ await axios.all([user_info_request, notifications_request, posts_request]).then(
   renderPosts(res3);
 }));
 }
-getFeed();
+
+
+getFeed().then(addEvents);
+
+let action_array=document.getElementsByClassName("action-button");
+
+
+async function addEvents(){
+    
+    for (var i=0;i<action_array.length;i++){
+        action_array[i].addEventListener("click",(e)=>{
+    
+        let splitted_id=e.target.id.split("_");
+        handleRequest(splitted_id[0],splitted_id[1]);
+    
+    });
+    
+    }
+
+}
+
+function handleRequest(action,friend_id){
+    axios.post('../../facebook_backend/PHP/handle_request.php', 
+    {
+        user_id:`${id}`,
+        to_user_id:`${friend_id}`,
+        action:`${action}`
+
+    }
+    ).then(function (response) {
+       document.getElementById(`notifications_${friend_id}`).remove();
+    })
+    .catch(function (error) {
+        console.log(error, "Couldn't get friends");
+    });
+}
+
 
 function findFriends(){
 
@@ -85,10 +121,10 @@ function renderUserInfo(user_data_response){
 
 function renderFriendRequests(friend_requests_response){
 
-
+    console.log(friend_requests_response);
     friend_requests_response.data.forEach(user => {
         notifications.innerHTML+=` 
-        <div class="notification-item">
+        <div class="notification-item" id="notification_${user.user_id}">
             <div class="action-left">
                 <div class="not-profile-picture">
                     <img src="${img_path}${user.user_picture}" alt="profile pic">
@@ -99,11 +135,12 @@ function renderFriendRequests(friend_requests_response){
             </div>
             <div class="action-right">
                 <div class="action">
-                    <button class="action-button">+</button>
-                    <button class="action-button">-</button>
+                    <i id="accept_${user.user_id}" class="action-button fa-solid fa-check"></i>
+                    <i class="fa-solid fa-circle-minus action-button" id="delete_${user.user_id}></i>
                 </div>
             </div>
-        `;     
+        `;    
+
     });
 
 }
@@ -139,3 +176,4 @@ function renderPosts(posts_response){
     });
 
 }
+
