@@ -7,7 +7,7 @@ let content=document.getElementById("content");
 let create_post=document.getElementById("add_post");
 let create_post_div=document.getElementById("add_post_div");
 let my_posts_btn=document.getElementById("my_posts");
-
+let logout_btn=document.getElementById("logout");
 
 let img_path="../../images/";
 
@@ -142,8 +142,8 @@ function renderFriendRequests(friend_requests_response){
             </div>
             <div class="action-right">
                 <div class="action">
-                    <i class="fa-solid fa-check action-button"  id="accept_${user.user_id}" style="color:#25e55f"></i>
-                    <i class="action-button fa-solid fa-xmark" id="delete_${user.user_id}" style="color:#ea4337"></i>
+                    <i class="fa-solid fa-check action-button"  id="accept_${user.user_id}" style="color:#25e55f;font-size:1.5rem"></i>
+                    <i class="action-button fa-solid fa-xmark" id="delete_${user.user_id}" style="color:#ea4337;font-size:1.5rem"></i>
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@ function createPost(){
     create_post_div.innerHTML=`<div id="create_post" class="filter">
     <div class="filter-post">
         <div class="filter-post-title">
-            <h4>Create post</h4>
+            <h3>Create post</h3>
         </div>
         <div class="post-content">
             <textarea id="post_text" class="textarea" placeholder="Write your status here..."></textarea>
@@ -267,3 +267,8 @@ function myPosts(){
     });
     
 }
+
+logout_btn.addEventListener("click",()=>{
+    window.localStorage.clear();
+    window.location.replace("http://localhost/facebook_frontend/index.html");
+});
