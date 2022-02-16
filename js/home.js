@@ -4,11 +4,14 @@ let my_posts=document.getElementById("my_posts");
 let profile_info=document.getElementById("profile_info");
 let notifications=document.getElementById("notification");
 let content=document.getElementById("content");
+let create_post=document.getElementById("add_post");
+let create_post_div=document.getElementById("add_post_div");
 
 let img_path="../../images/";
 
 search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
+create_post.addEventListener("click",createPost);
 
 console.log(id);
 
@@ -54,12 +57,13 @@ function handleRequest(action,friend_id){
 
     }
     ).then(function (response) {
-       document.getElementById(`notifications_${friend_id}`).remove();
+       console.log(response);
     })
     .catch(function (error) {
         console.log(error, "Couldn't get friends");
     });
 }
+
 
 
 function findFriends(){
@@ -135,8 +139,8 @@ function renderFriendRequests(friend_requests_response){
             </div>
             <div class="action-right">
                 <div class="action">
-                    <p class="action-button" id="accept_${user.user_id}">+</p>
-                    <p class="action-button" id="delete_${user.user_id}">-</p>
+                    <i class="fa-solid fa-check action-button"  id="accept_${user.user_id}"></i>
+                    <i class="action-button fa-solid fa-xmark" id="delete_${user.user_id}"></i>
                 </div>
             </div>
         </div>
@@ -177,4 +181,38 @@ function renderPosts(posts_response){
     });
 
 }
+
+async function createPost(){
+
+    create_post_div.innerHTML=`<div id="create_post" class="filter">
+    <div class="filter-post">
+        <div class="filter-post-title">
+            <h4>Create post</h4>
+        </div>
+        <div class="post-content">
+            <textarea id="post_text" class="textarea" placeholder="Write your status here..."></textarea>
+        </div>
+        <div class="filter-post-footer">
+            <button id="post_submit" class="btn create-post" type="button">Submit</button>
+        </div>
+    </div>
+</div>`;
+document.getElementById("post_submit").addEventListener("click",()=>{
+    
+    axios.post('../../facebook_backend/PHP/create_post.php', 
+    {
+        user_id:`${id}`,
+        post_content:document.getElementById("post_text").value
+
+    }
+    ).then(function (response) {
+       console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    document.getElementById("add_post_div").innerHTML = "";
+})
+}
+
 
