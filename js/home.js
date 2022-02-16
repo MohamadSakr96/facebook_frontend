@@ -135,10 +135,11 @@ function renderFriendRequests(friend_requests_response){
             </div>
             <div class="action-right">
                 <div class="action">
-                    <i id="accept_${user.user_id}" class="action-button fa-solid fa-check"></i>
-                    <i class="fa-solid fa-circle-minus action-button" id="delete_${user.user_id}></i>
+                    <p class="action-button" id="accept_${user.user_id}">+</p>
+                    <p class="action-button" id="delete_${user.user_id}">-</p>
                 </div>
             </div>
+        </div>
         `;    
 
     });
