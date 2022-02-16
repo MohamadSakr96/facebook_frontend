@@ -6,12 +6,15 @@ let notifications=document.getElementById("notification");
 let content=document.getElementById("content");
 let create_post=document.getElementById("add_post");
 let create_post_div=document.getElementById("add_post_div");
+let my_posts_btn=document.getElementById("my_posts");
+
 
 let img_path="../../images/";
 
 search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
 create_post.addEventListener("click",createPost);
+my_posts_btn.addEventListener("click",myPosts);
 
 console.log(id);
 
@@ -139,8 +142,8 @@ function renderFriendRequests(friend_requests_response){
             </div>
             <div class="action-right">
                 <div class="action">
-                    <i class="fa-solid fa-check action-button"  id="accept_${user.user_id}"></i>
-                    <i class="action-button fa-solid fa-xmark" id="delete_${user.user_id}"></i>
+                    <i class="fa-solid fa-check action-button"  id="accept_${user.user_id}" style="color:#25e55f"></i>
+                    <i class="action-button fa-solid fa-xmark" id="delete_${user.user_id}" style="color:#ea4337"></i>
                 </div>
             </div>
         </div>
@@ -182,7 +185,7 @@ function renderPosts(posts_response){
 
 }
 
-async function createPost(){
+function createPost(){
 
     create_post_div.innerHTML=`<div id="create_post" class="filter">
     <div class="filter-post">
@@ -215,4 +218,52 @@ document.getElementById("post_submit").addEventListener("click",()=>{
 })
 }
 
+function myPosts(){
 
+    axios.post('../../facebook_backend/PHP/get_own_posts.php', 
+    {
+        user_id:`${id}`
+
+    }
+    ).then(function (response) {
+        
+        add_post_div.innerHTML=` <div id="create_post" class="filter">
+        <div class="filter-MY-posts">
+            <h2 class="filter-MY-post-title">My Posts</h2>
+            <div id="my_posts_div"></div>
+            </div>
+            </div>`
+        let my_posts_div=document.getElementById("my_posts_div");
+        response.data.forEach(post => {
+            var post_date = `${post.post_date}`;
+            var splittedString=post_date.split(":");
+            post_date=splittedString.slice(0,-1).join(':');
+
+            my_posts_div.innerHTML+=`
+                <div class="post">
+                    <div class="MY-posts-header">
+                        <div class="left">
+                            <div class="post-profile-name">
+                                <h4>Hello!</h4>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <i class="fa-solid fa-pen-to-square" style="color:#3c5b9a"></i>&nbsp&nbsp&nbsp
+                            <i class="fa-solid fa-trash-can" style="color:#ea4337"></i>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <textarea id="1" class="textarea" readonly>${post.post_content}</textarea>
+                    </div>
+                    <div class="post-footer">
+                        <div class="likes">${post.nb_likes}like</div>
+                        <div class="date">${post_date}</div>
+                    </div>`
+        });
+       console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    
+}
