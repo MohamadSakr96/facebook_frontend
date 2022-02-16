@@ -1,5 +1,4 @@
 let id=localStorage.getItem("id");
-let search=document.getElementById("find_friends");
 let my_posts=document.getElementById("my_posts");
 let profile_info=document.getElementById("profile_info");
 let notifications=document.getElementById("notification");
@@ -8,13 +7,15 @@ let create_post=document.getElementById("add_post");
 let create_post_div=document.getElementById("add_post_div");
 let my_posts_btn=document.getElementById("my_posts");
 let logout_btn=document.getElementById("logout");
+let find_friend_btn=document.getElementById("find_friends");
 
-let img_path="../../images/";
 
-search.addEventListener("click",findFriends);
 my_posts.addEventListener("click",getUserPosts);
 create_post.addEventListener("click",createPost);
 my_posts_btn.addEventListener("click",myPosts);
+find_friend_btn.addEventListener("click",()=>{
+    findFriends(sendEvent);
+});
 
 console.log(id);
 
@@ -44,6 +45,7 @@ async function addEvents(){
     
         let splitted_id=e.target.id.split("_");
         handleRequest(splitted_id[0],splitted_id[1]);
+        document.getElementById(`notification_${user.user_id}`).innerHTML="";
     
     });
     
@@ -69,25 +71,6 @@ function handleRequest(action,friend_id){
 
 
 
-function findFriends(){
-
-    if(id===""){
-        console.log("Id not defined");
-    }else{
-        axios.post('../../facebook_backend/PHP/search.php', 
-        {
-            user_id:`${id}`
-        }
-        ).then(function (response) {
-           console.log(response)
-            
-        })
-        .catch(function (error) {
-            console.log(error, "Couldn't get friends");
-        });
-
-    }
-}
 
 function getUserPosts(){
 
@@ -112,12 +95,9 @@ function getUserPosts(){
 
 function renderUserInfo(user_data_response){
 
-    console.log(img_path);
-    let y=`${img_path}${user_data_response.data[0].user_picture}`;
-    console.log(y);
     profile_info.innerHTML=`
     <div class="profile-picture">
-        <img src="${img_path}${user_data_response.data[0].user_picture}" alt="profile pic" width="100px">
+        <img src="assets/ProfilePicture.png" alt="profile pic" width="100px">
     </div>
     <div class="profile-name">
         <h2>${user_data_response.data[0].user_name}</h2>
@@ -134,7 +114,7 @@ function renderFriendRequests(friend_requests_response){
         <div class="notification-item" id="notification_${user.user_id}">
             <div class="action-left">
                 <div class="not-profile-picture">
-                    <img src="${img_path}${user.user_picture}" alt="profile pic">
+                    <img src="assets/ProfilePicture.png" alt="profile pic">
                 </div>
                 <div class="not-profile-name">
                     <p>${user.user_name}</p>
@@ -167,7 +147,7 @@ function renderPosts(posts_response){
         <div class="post" id="${post.post_id}">
         <div class="post-header">
             <div class="post-profile-picture">
-                <img src="${img_path}${post.user_picture}" alt="profile pic">
+                <img src="assets/ProfilePicture.png" alt="profile pic">
             </div>
             <div class="post-profile-name">
                 <h4>${post.user_name}</h4>
@@ -272,3 +252,72 @@ logout_btn.addEventListener("click",()=>{
     window.localStorage.clear();
     window.location.replace("http://localhost/facebook_frontend/index.html");
 });
+
+function findFriends(sendEvent){
+    axios.post('../../facebook_backend/PHP/search.php', 
+    {
+        user_id:`${id}`
+
+    }
+    ).then(function (response) {
+        
+        add_post_div.innerHTML=`
+        <div id="find_friends" class="filter">
+            <div class="find-friends">
+                <h2>Find Friends</h2>
+                <div class="container-find" id="container_find">
+                </div>
+            </div>
+        </div>`
+        let container_find=document.getElementById("container_find");
+        response.data.forEach(user => {
+
+            container_find.innerHTML+=`
+            <div class="notification-item" id="user_${user.user_id}">
+                <div class="action-left">
+                    <div class="not-profile-picture">
+                        <img src="assets/gog-img.jpg" alt="profile pic">
+                    </div>
+                    <div class="not-profile-name">
+                        <p>${user.user_name}</p>
+                    </div>
+                </div>
+                <div class="action-right">
+                    <div class="action">
+                        <i class="fa-solid fa-user-plus send-icon" id="${user.user_id}" style="color:#25e55f;font-size:1rem"></i>&nbsp&nbsp&nbsp&nbsp
+                        <i class="fa-solid fa-user-large-slash" id="block_${user.user_id}" style="color:#ea4337;font-size:1rem"></i>
+                    </div>
+                </div>
+            </div>`
+        });
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    sendEvent();
+    
+}
+
+async function sendEvent(){
+    let arr_icons=document.getElementsByClassName("send-icon");
+    await arr_icons.forEach(element => {
+        var icon_id=element.target.id;
+        document.getElementById(`${icon_id}`).addEventListener("click",()=>{
+            axios.post('../../facebook_backend/PHP/send_request.php', 
+            {
+                user_id:`${id}`,
+                to_user_id:`${icon_id}`
+        
+            }
+            ).then(function (response) {
+                document.getElementById(`user_${icon_id}`).innerHTML="";
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        })
+    });
+}
+
+
