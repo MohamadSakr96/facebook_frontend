@@ -1,7 +1,7 @@
 let login_button = document.getElementById("login");
 let email=document.getElementById("email");
 let password=document.getElementById("password");
-let response=document.getElementById("response");
+let message=document.getElementById("response");
 
 
 login_button.addEventListener("click", logIn);
@@ -9,7 +9,7 @@ login_button.addEventListener("click", logIn);
 function logIn(){
 
     if(email.value==="" || password.value===""){
-        response.innerHTML="<p>Please fill all fields.</p>";
+        message.innerHTML="<p>Please fill all fields.</p>";
     }else{
         axios.post('../../facebook_backend/PHP/login.php', 
         {
@@ -18,8 +18,13 @@ function logIn(){
 
         }
         ).then(function (response) {
-            localStorage.setItem("id", response.data.user_id);
-            window.location.replace("http://localhost/facebook_frontend/home.html");
+
+            if (response.data.status==="Logged In !"){
+                localStorage.setItem("id", response.data.user_id);
+                window.location.replace("http://localhost/facebook_frontend/home.html");
+            }else{
+                message.innerHTML="<p>User not found.</p>";
+            }
         })
         .catch(function (error) {
             console.log(error, "didn't work");
