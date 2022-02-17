@@ -203,7 +203,7 @@ function createPost(){
 
     create_post_div.innerHTML=`<div id="create_post" class="filter">
     <div class="filter-post">
-        <div class="filter-post-title">
+        <div class="filter-post-title ff-header">
             <h3>Create post</h3>
             <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
         </div>
@@ -245,13 +245,17 @@ function myPosts(){
     }
     ).then(function (response) {
         
-        add_post_div.innerHTML=` <div id="create_post" class="filter">
-        <div class="filter-MY-posts">
-            <h2 class="filter-MY-post-title">My Posts</h2>
-            <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
-            <div id="my_posts_div"></div>
+        add_post_div.innerHTML=` 
+            <div id="create_post" class="filter">
+                <div class="filter-MY-posts">
+                    <div class="ff-header">
+                        <h2 class="filter-MY-post-title">My Posts</h2>
+                        <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
+                    </div>
+                    <div id="my_posts_div"></div>
+                </div>
             </div>
-            </div>`
+        `;
             document.getElementById("delete").addEventListener("click",()=>{
                 add_post_div.innerHTML="";
             });
@@ -306,8 +310,10 @@ function findFriends(sendEvent){
         add_post_div.innerHTML=`
         <div id="find_friends" class="filter">
             <div class="find-friends">
-                <h2>Find Friends</h2>
-                <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
+                <div class="ff-header">
+                    <h2>Find Friends</h2>
+                    <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
+                </div>
                 <div class="container-find" id="container_find">
                 </div>
             </div>

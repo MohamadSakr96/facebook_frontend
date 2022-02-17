@@ -97,10 +97,16 @@ body {
 	justify-content: space-around;
 	overflow-y: auto;
 }
-.find-friends > h2 {
-	margin-top: 4rem;
-	text-align: center;
+
+.ff-header {
+	display: flex;
+	justify-content: space-between;
+	width: 90%;
 }
+.ff-header > i:hover {
+	cursor: pointer;
+}
+
 .container-find {
 	margin: 2rem 4rem;
 }
