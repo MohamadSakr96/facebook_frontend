@@ -171,6 +171,7 @@ function createPost(){
     <div class="filter-post">
         <div class="filter-post-title">
             <h3>Create post</h3>
+            <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
         </div>
         <div class="post-content">
             <textarea id="post_text" class="textarea" placeholder="Write your status here..."></textarea>
@@ -180,6 +181,9 @@ function createPost(){
         </div>
     </div>
 </div>`;
+document.getElementById("delete").addEventListener("click",()=>{
+    create_post_div.innerHTML="";
+});
 document.getElementById("post_submit").addEventListener("click",()=>{
     
     axios.post('../../facebook_backend/PHP/create_post.php', 
@@ -210,9 +214,13 @@ function myPosts(){
         add_post_div.innerHTML=` <div id="create_post" class="filter">
         <div class="filter-MY-posts">
             <h2 class="filter-MY-post-title">My Posts</h2>
+            <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
             <div id="my_posts_div"></div>
             </div>
             </div>`
+            document.getElementById("delete").addEventListener("click",()=>{
+                add_post_div.innerHTML="";
+            });
         let my_posts_div=document.getElementById("my_posts_div");
         response.data.forEach(post => {
             var post_date = `${post.post_date}`;
@@ -265,10 +273,14 @@ function findFriends(sendEvent){
         <div id="find_friends" class="filter">
             <div class="find-friends">
                 <h2>Find Friends</h2>
+                <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
                 <div class="container-find" id="container_find">
                 </div>
             </div>
         </div>`
+        document.getElementById("delete").addEventListener("click",()=>{
+            add_post_div.innerHTML="";
+        });
         let container_find=document.getElementById("container_find");
         response.data.forEach(user => {
 
@@ -276,7 +288,7 @@ function findFriends(sendEvent){
             <div class="notification-item" id="user_${user.user_id}">
                 <div class="action-left">
                     <div class="not-profile-picture">
-                        <img src="assets/gog-img.jpg" alt="profile pic">
+                        <img src="assets/ProfilePicture.png" alt="profile pic">
                     </div>
                     <div class="not-profile-name">
                         <p>${user.user_name}</p>
@@ -290,34 +302,42 @@ function findFriends(sendEvent){
                 </div>
             </div>`
         });
+        return sendEvent();
     })
     .catch(function (error) {
         console.log(error);
     });
-    sendEvent();
+   
     
 }
 
 async function sendEvent(){
     let arr_icons=document.getElementsByClassName("send-icon");
-    await arr_icons.forEach(element => {
-        var icon_id=element.target.id;
-        document.getElementById(`${icon_id}`).addEventListener("click",()=>{
-            axios.post('../../facebook_backend/PHP/send_request.php', 
-            {
-                user_id:`${id}`,
-                to_user_id:`${icon_id}`
-        
-            }
-            ).then(function (response) {
-                document.getElementById(`user_${icon_id}`).innerHTML="";
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
 
-        })
+    for (var i=0;i<arr_icons.length;i++){
+        arr_icons[i].addEventListener("click",(e)=>{
+        x(e.target.id);
+    
     });
+    
+    }
+
 }
 
 
+function x(e){
+    axios.post('../../facebook_backend/PHP/send_request.php', 
+    {
+        user_id:`${id}`,
+        to_user_id:`${e}`,
+        action:`send`
+
+    }
+    ).then(function (response) {
+        console.log(response);
+        document.getElementById(`user_${e}`).innerHTML="";
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
