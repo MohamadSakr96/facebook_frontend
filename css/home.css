@@ -94,8 +94,10 @@ body {
 	margin-top: 10%;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	overflow-y: auto;
+}
+.find-friends > .ff-header {
+	margin-top: 2rem;
 }
 
 .ff-header {

@@ -29,6 +29,5 @@ function logIn(){
         .catch(function (error) {
             console.log(error, "didn't work");
         });
-
     }
 }
