@@ -311,7 +311,7 @@ function findFriends(sendEvent){
         <div id="find_friends" class="filter">
             <div class="find-friends">
                 <div class="ff-header">
-                    <h2>Find Friends</h2>
+                    <h2 style="padding-left:40px">Find Friends</h2>
                     <i class="action-button fa-solid fa-xmark" id="delete" style="color:#ea4337;font-size:1.5rem"></i>
                 </div>
                 <div class="container-find" id="container_find">
