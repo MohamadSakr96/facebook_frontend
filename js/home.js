@@ -33,10 +33,10 @@ await axios.all([user_info_request, notifications_request, posts_request]).then(
 }
 
 
-getFeed().then(addEvents);
+getFeed().then(addEvents).then(addLikes);
 
 let action_array=document.getElementsByClassName("action-button");
-
+let likes_array=document.getElementsByClassName("like");
 
 async function addEvents(){
     
@@ -45,13 +45,47 @@ async function addEvents(){
     
         let splitted_id=e.target.id.split("_");
         handleRequest(splitted_id[0],splitted_id[1]);
-        document.getElementById(`notification_${user.user_id}`).innerHTML="";
+        // document.getElementById(`notification_${user.user_id}`).innerHTML="";
     
     });
     
     }
 
 }
+
+async function addLikes(){
+    
+    for (var i=0;i<action_array.length;i++){
+        likes_array[i].addEventListener("click",(e)=>{
+    
+        addLike(e.target.id);
+        document.getElementById(e.target.id).style.color="red";
+    
+    });
+    
+    }
+
+}
+
+
+function addLike(e){
+    axios.post('../../facebook_backend/PHP/like_dislike.php', 
+    {
+        user_id:`${id}`,
+        post_id:`${e}`,
+        action:`like`
+
+    }
+    ).then(function (response) {
+       console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+
 
 function handleRequest(action,friend_id){
     axios.post('../../facebook_backend/PHP/handle_request.php', 
@@ -65,7 +99,7 @@ function handleRequest(action,friend_id){
        console.log(response);
     })
     .catch(function (error) {
-        console.log(error, "Couldn't get friends");
+        console.log(error);
     });
 }
 
@@ -86,7 +120,7 @@ function getUserPosts(){
             
         })
         .catch(function (error) {
-            console.log(error, "Couldn't get friends");
+            console.log(error);
         });
 
     }
@@ -144,7 +178,7 @@ function renderPosts(posts_response){
         post_date=splittedString.slice(0,-1).join(':');
 
         content.innerHTML+=`
-        <div class="post" id="${post.post_id}">
+        <div class="post" >
         <div class="post-header">
             <div class="post-profile-picture">
                 <img src="assets/ProfilePicture.png" alt="profile pic">
@@ -157,7 +191,7 @@ function renderPosts(posts_response){
             <textarea id="1" class="textarea" readonly>${post.post_content}</textarea>
         </div>
         <div class="post-footer">
-            <div class="likes">${post.nb_likes}</div>
+            <div class="likes">${post.nb_likes} <i class="fa-solid fa-heart like" id="${post.post_id}"></i></div>
             <div class="date">${post_date}</div>
         </div>
     </div>`
@@ -244,7 +278,7 @@ function myPosts(){
                         <textarea id="1" class="textarea" readonly>${post.post_content}</textarea>
                     </div>
                     <div class="post-footer">
-                        <div class="likes">${post.nb_likes}like</div>
+                        <div class="likes">${post.nb_likes} likes</div>
                         <div class="date">${post_date}</div>
                     </div>`
         });
@@ -341,3 +375,4 @@ function x(e){
         console.log(error);
     });
 }
+
